@@ -1,5 +1,6 @@
 # equation invalid format : - 5 * X^0 + 5 * X^1 - 4 * X^2 + 3 * X^3 = 30 * X^0
-# equation valid format : - 5 * X^0 + 5 * X^1 - 4 * X^2 = 30 * X^0
+# equation valid format : - 5 * X^0 + 5 * X^1 - 4 * X^2 = 30 * X^0 - 3 * X^2
+# equation valid format : - 5 * X^0 = 0
 import re
 
 # parse equation from user input
@@ -68,8 +69,23 @@ def simplify_equation(coefficients, signs) :
 	print ("Simplified coefficients for X^0, X^1, X^2 : ", simplified_coefficients)
 	return simplified_coefficients, simplified_equation
 
+def solve_zero_degree(coefficients) :
+	if (coefficients[0] == 0) :
+		print("All real numbers are solutions")
+	else :
+		print("No solution")
+
+def solve_first_degree(coefficients) :
+	print("The solution is :")
+	print(-coefficients[0] / coefficients[1])
+
 if __name__ == "__main__":
 	coefficients, signs = get_coefficients()
 	find_invalid_degree(coefficients)
 	coefficients = signs_to_coefficients(coefficients, signs)
 	simplified_coefficients, simplified_equation = simplify_equation(coefficients, signs)
+	if (simplified_coefficients[1] == 0 and simplified_coefficients[2] == 0) :
+		solve_zero_degree(simplified_coefficients)
+	elif (simplified_coefficients[2] == 0) :
+		solve_first_degree(simplified_coefficients)
+		
