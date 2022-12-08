@@ -15,14 +15,12 @@ def get_equation() :
 	equation = equation.replace("=", "-(") + ")"
 	left = equation.split("-(", 1)[0]
 	right = equation.split("-(", 1)[1]
-	print("Right : " + right)
 	if (right[:1] != '-') :
 		right = "+ " + right
 	right = right.replace("+", " ")
 	right = right.replace("-", "+")
 	right = right.replace(" ", "-")
 	equation = left + right
-	print("Equation " + equation)
 	return equation
 
 # regex getter to get coefficients and signs in the equation
@@ -100,8 +98,6 @@ def solve_second_degree(coefficients) :
 if __name__ == "__main__":
 	coefficients, signs = get_coefficients()
 	find_invalid_degree(coefficients)
-	print("Coefficients : ", coefficients)
-	print("Signs : ", signs)
 	coefficients = signs_to_coefficients(coefficients, signs)
 	simplified_coefficients, simplified_equation = simplify_equation(coefficients, signs)
 	if (simplified_coefficients[1] == 0 and simplified_coefficients[2] == 0) :
