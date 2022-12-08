@@ -65,6 +65,8 @@ def simplify_equation(coefficients, signs) :
 			if (simplified_coefficients[i] > 0) :
 				simplified_equation += "+ "
 			simplified_equation += str(simplified_coefficients[i]) + " * X^" + str(i) + " "
+	if (simplified_equation == "") :
+		simplified_equation = "0 "
 	print("Reduced form : " + simplified_equation + "= 0")
 	print ("Simplified coefficients for X^0, X^1, X^2 : ", simplified_coefficients)
 	return simplified_coefficients, simplified_equation
