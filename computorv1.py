@@ -15,12 +15,14 @@ def get_equation() :
 	equation = equation.replace("=", "-(") + ")"
 	left = equation.split("-(", 1)[0]
 	right = equation.split("-(", 1)[1]
+	print("Right : " + right)
+	if (right[:1] != '-') :
+		right = "+ " + right
 	right = right.replace("+", " ")
 	right = right.replace("-", "+")
-	if (right[:1] != '-') :
-		right = "-" + right
 	right = right.replace(" ", "-")
 	equation = left + right
+	print("Equation " + equation)
 	return equation
 
 # regex getter to get coefficients and signs in the equation
@@ -79,13 +81,33 @@ def solve_first_degree(coefficients) :
 	print("The solution is :")
 	print(-coefficients[0] / coefficients[1])
 
+def solve_second_degree(coefficients) :
+	print("The solution is :")
+	# discriminant = b^2 - 4ac
+	delta = coefficients[1] ** 2 - 4 * coefficients[2] * coefficients[0]
+	if (delta < 0) : # no real solution, complex solution = -b / 2a +- sqrt(-delta) / 2a
+		print("Discriminant is strictly negative, the two solutions are:")
+		print((-coefficients[1] - delta ** 0.5) / (2 * coefficients[2]))
+		print((-coefficients[1] + delta ** 0.5) / (2 * coefficients[2]))
+	elif (delta == 0) : # one real solution = -b / 2a
+		print("Discriminant is zero, the solution is:")
+		print(-coefficients[1] / (2 * coefficients[2]))
+	else : # two real solutions = -b / 2a +- sqrt(delta) / 2a
+		print("Discriminant is strictly positive, the two solutions are:")
+		print((-coefficients[1] - delta ** 0.5) / (2 * coefficients[2]))
+		print((-coefficients[1] + delta ** 0.5) / (2 * coefficients[2]))
+
 if __name__ == "__main__":
 	coefficients, signs = get_coefficients()
 	find_invalid_degree(coefficients)
+	print("Coefficients : ", coefficients)
+	print("Signs : ", signs)
 	coefficients = signs_to_coefficients(coefficients, signs)
 	simplified_coefficients, simplified_equation = simplify_equation(coefficients, signs)
 	if (simplified_coefficients[1] == 0 and simplified_coefficients[2] == 0) :
 		solve_zero_degree(simplified_coefficients)
 	elif (simplified_coefficients[2] == 0) :
 		solve_first_degree(simplified_coefficients)
+	else :
+		solve_second_degree(simplified_coefficients)
 		
